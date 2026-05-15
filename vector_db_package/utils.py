@@ -6,9 +6,9 @@ from pypdf import PdfReader
 from io import BytesIO
 
 def menu():
-	print(f"Enter 1 to make query (default database)")
-	print("Enter 2 to add new URL to database")
-	print("Enter 3 to get files of the embeddings and the mappings")
+	print(f"Enter 1 to make query.")
+	print("Enter 2 to add new URL to database.")
+	print("Enter 3 to add new PDF to database.")
 
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
@@ -58,13 +58,22 @@ def add_vectorized_PDF(url, vectors, dictionary):
 			vectors.append(vector)
 			dictionary[len(dictionary)] = {"url": url, "text": text}
 	
+def check_duplicate(url, dictionary):
+	for index in range(len(dictionary)):
+		if dictionary[index]["url"] == url:
+			return True
+		
+	return False
+
 def cosine_compare(query_vector, target_vector):
 	similarity = (query_vector @ target_vector) / (np.linalg.norm(query_vector) * (np.linalg.norm(target_vector)))
 	return similarity
 
 def search_database(query_vector, vectors, dictionary, K):
 
+	count = 0
 	top_K_vectors = np.array()
+	minimum = top_K_vectors.min()
 
 	for vector in vectors:
 		similarity_coefficient = cosine_compare(query_vector, vector)
