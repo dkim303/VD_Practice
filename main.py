@@ -47,6 +47,6 @@ if __name__ == "__main__":
     should_continue = True
     while should_continue:
         # handles all user inputs for command sequences and program quitting
-        should_continue = utils.interface(embeddings_matrix, data, e_name, d_name)
+        should_continue, embeddings = utils.interface(embeddings_matrix, data, e_name, d_name)
             
     
