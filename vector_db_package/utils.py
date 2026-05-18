@@ -134,6 +134,8 @@ def interface(embeddings, metadata, e_name, d_name):
 				# make query here
 				top_K_indicies = search_database(query_vector, embeddings, metadata, K)
 
+				print(top_K_indicies)
+
 				return True, embeddings
 			
 			case "2":
@@ -154,6 +156,7 @@ def interface(embeddings, metadata, e_name, d_name):
 						embeddings = add_vectorized_website(url, embeddings, metadata)
 						update_files(e_name, d_name, embeddings, metadata)
 
+						print("Success: Website Added.")
 						return True, embeddings
 						
 					# PDF URL Entering
@@ -169,6 +172,7 @@ def interface(embeddings, metadata, e_name, d_name):
 						embeddings = add_vectorized_PDF(url, embeddings, metadata)
 						update_files(e_name, d_name, embeddings, metadata)
 
+						print("Success: PDF Added.")
 						return True, embeddings
 
 					# Invalid URL Type
